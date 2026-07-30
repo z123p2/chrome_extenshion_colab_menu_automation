@@ -54,7 +54,8 @@
 │   ├── icon48.png
 │   └── icon128.png
 ├── README.md
-└── README.ru.md
+├── README.ru.md
+└── LICENSE
 ```
 
 ## Как это работает
@@ -68,4 +69,4 @@
 
 ## Лицензия
 
-MIT
+[MIT](LICENSE)

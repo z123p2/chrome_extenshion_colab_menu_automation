@@ -54,7 +54,8 @@ Click the extension icon in the toolbar to open the popup:
 │   ├── icon48.png
 │   └── icon128.png
 ├── README.md
-└── README.ru.md
+├── README.ru.md
+└── LICENSE
 ```
 
 ## How it works
@@ -68,4 +69,4 @@ Click the extension icon in the toolbar to open the popup:
 
 ## License
 
-MIT
+[MIT](LICENSE)

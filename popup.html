@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #333333;
+      --border: #dadce0;
+      --btn-bg: #f8f9fa;
+      --btn-hover: #e8eaed;
+      --status-bg: #f1f3f4;
+      --primary: #1a73e8;
+      --primary-hover: #1557b0;
+      --danger-bg: #fce8e6;
+      --danger-text: #d93025;
+      --danger-border: #f5c6c6;
+      --on-bg: #e6f4ea;
+      --on-text: #188038;
+      --on-border: #b7e1c2;
+      --off-bg: #fce8e6;
+      --off-text: #d93025;
+      --off-border: #f5c6c6;
+      --section-label: #9aa0a6;
+      --select-bg: #fff;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1e1e1e;
+      --text: #e0e0e0;
+      --border: #444;
+      --btn-bg: #2d2d2d;
+      --btn-hover: #3d3d3d;
+      --status-bg: #2d2d2d;
+      --primary: #4a8af4;
+      --primary-hover: #5a9af4;
+      --danger-bg: #442222;
+      --danger-text: #f88;
+      --danger-border: #663333;
+      --on-bg: #1a3a1a;
+      --on-text: #4caf50;
+      --on-border: #2a5a2a;
+      --off-bg: #3a1a1a;
+      --off-text: #f88;
+      --off-border: #663333;
+      --section-label: #888;
+      --select-bg: #2d2d2d;
+    }
+
+    body {
+      width: 400px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      padding: 12px;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+    h2 { font-size: 15px; margin: 0 0 8px; color: var(--text); }
+    select {
+      font-size: 12px;
+      padding: 4px 6px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--select-bg);
+      color: var(--text);
+      cursor: pointer;
+    }
+    button { display: block; width: 100%; padding: 8px 12px; margin: 4px 0; cursor: pointer;
+             border: 1px solid var(--border); border-radius: 6px; background: var(--btn-bg); font-size: 13px; color: var(--text); }
+    button:hover { background: var(--btn-hover); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    button.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+    button.primary:hover { background: var(--primary-hover); }
+    button.danger { background: var(--danger-bg); color: var(--danger-text); border-color: var(--danger-border); }
+    button.danger:hover { filter: brightness(0.95); }
+    button.on { background: var(--on-bg); color: var(--on-text); border-color: var(--on-border); }
+    button.on:hover { filter: brightness(0.95); }
+    button.off { background: var(--off-bg); color: var(--off-text); border-color: var(--off-border); }
+    button.off:hover { filter: brightness(0.95); }
+    #status { font-size: 12px; margin: 6px 0; padding: 6px 8px;
+              background: var(--status-bg); border-radius: 4px; min-height: 16px; }
+    #results { font-size: 11px; max-height: 350px; overflow: auto; margin-top: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    th, td { border: 1px solid var(--border); padding: 3px 5px; text-align: left; }
+    th { background: var(--status-bg); position: sticky; top: 0; }
+    .sub { opacity: 0.7; }
+    .sub td:first-child { padding-left: 18px; }
+    .error { color: var(--off-text); }
+    .ok { color: var(--on-text); }
+    .actions { display: flex; gap: 6px; }
+    .actions button { flex: 1; font-size: 12px; padding: 6px; text-align: center; }
+    .section-label { font-size: 10px; color: var(--section-label); text-transform: uppercase; letter-spacing: 0.5px; margin: 8px 0 2px; }
+    .badge { display: inline-block; padding: 1px 5px; border-radius: 3px; font-size: 10px; }
+    .badge.disabled { background: var(--off-bg); color: var(--off-text); }
+    .badge.submenu { background: #e8f0fe; color: var(--primary); }
+    .header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <div class="header-row">
+    <h2 style="margin:0">🔍 Colab Menu Scanner</h2>
+    <select id="themeSelect">
+      <option value="light">☀️ Светлая</option>
+      <option value="dark">🌙 Тёмная</option>
+      <option value="system">💻 Системная</option>
+    </select>
+  </div>
+  <div id="status">Готов. Откройте Colab и нажмите сканирование.</div>
+
+  <div class="section-label">Панель инструментов</div>
+  <div class="actions">
+    <button id="toggleBtn">🔘 Кнопки</button>
+    <button id="closeMenusBtn">✕ Закрыть меню</button>
+  </div>
+
+  <div class="section-label">Сканирование</div>
+  <div class="actions">
+    <button id="scanBtn" class="primary">🔍 Сканировать меню</button>
+    <button id="downloadBtn" disabled>📥 JSON</button>
+  </div>
+
+  <div class="section-label">Логи</div>
+  <div class="actions">
+    <button id="logBtn">📋 Скачать логи</button>
+    <button id="clearLogBtn">🗑 Очистить</button>
+    <button id="logToggleBtn" class="off">📝 Логи: Выкл</button>
+  </div>
+
+  <div class="section-label">Диагностика</div>
+  <div class="actions">
+    <button id="domBtn">📄 DOM слепок</button>
+  </div>
+
+  <div id="results"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
